@@ -31,6 +31,9 @@ async def run(ctx, file_path):
         await ctx.send(f'File {file_path} not found.')
 
 async def process_file_change(file_path, channel_id, processed_files):
+    if os.path.basename(file_path).startswith('.'):
+        return  # Ignore dot files
+
     with open(file_path, 'r', encoding='utf-8') as file:
         new_lines = file.readlines()
         if file_path in processed_files:
@@ -44,7 +47,7 @@ async def process_file_change(file_path, channel_id, processed_files):
             return  # Skip processing for the first time
         channel = bot.get_channel(channel_id)
         message = f'New data in {file_path}:\n```' + ''.join(unique_lines) + '```'
-        await asyncio.sleep(3600)  # Add a delay of one hour (3600 seconds) before sending the message
+        await asyncio.sleep(1)  # Add a small delay before sending the message
         await channel.send(message)
 
 class FileChangeHandler(FileSystemEventHandler):
