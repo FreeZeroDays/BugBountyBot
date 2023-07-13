@@ -17,8 +17,9 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name} ({bot.user.id})')
-    await asyncio.sleep(1)  
+    await asyncio.sleep(1)  # Wait for a second before starting the file watchers
     bot.loop.create_task(file_watcher(config.DIRECTORY_PATH, config.CHANNEL_ID))
+    bot.loop.create_task(file_watcher(config.OTHER_DIRECTORY_PATH, config.OTHER_CHANNEL_ID))
 
 @bot.command()
 async def run(ctx, file_path):
@@ -40,9 +41,10 @@ async def process_file_change(file_path, channel_id, processed_files):
             processed_files[file_path].extend(unique_lines)
         else:
             processed_files[file_path] = new_lines
-            return 
+            return  # Skip processing for the first time
         channel = bot.get_channel(channel_id)
         message = f'New data in {file_path}:\n```' + ''.join(unique_lines) + '```'
+        await asyncio.sleep(3600)  # Add a delay of one hour (3600 seconds) before sending the message
         await channel.send(message)
 
 class FileChangeHandler(FileSystemEventHandler):
