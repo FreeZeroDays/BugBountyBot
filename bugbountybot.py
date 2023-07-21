@@ -31,7 +31,8 @@ async def run(ctx, file_path):
         await ctx.send(f'File {file_path} not found.')
 
 async def process_file_change(file_path, channel_id, processed_files):
-    if os.path.basename(file_path).startswith('.'):
+    base_name, file_ext = os.path.splitext(os.path.basename(file_path))
+    if file_ext == '':
         return  # Ignore dot files
 
     with open(file_path, 'r', encoding='utf-8') as file:
