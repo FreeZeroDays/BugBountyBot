@@ -14,12 +14,18 @@ intents.presences = False
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+def run_monitor():
+    script_path = os.path.abspath("monitor.py")
+    subprocess.Popen(["python", script_path])
+
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name} ({bot.user.id})')
     await asyncio.sleep(1)  # Wait for a second before starting the file watchers
     bot.loop.create_task(file_watcher(config.DIRECTORY_PATH, config.CHANNEL_ID))
     bot.loop.create_task(file_watcher(config.OTHER_DIRECTORY_PATH, config.OTHER_CHANNEL_ID))
+
+    run_monitor()  # Run the monitor.py script as a subprocess
 
 @bot.command()
 async def run(ctx, file_path):
