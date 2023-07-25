@@ -22,7 +22,7 @@ def main():
 
     # Hardcode list of bash commands here
     commands = [
-        "while IFS= read -r line; do subfinder -silent -dL $file -all -o $line-subdomains; done < $file",
+        "file=domains.txt; while IFS= read -r line; do subfinder -silent -dL $file -all -o $line-subdomains; done < $file",
     ]
 
     while True:
