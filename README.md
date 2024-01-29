@@ -1,3 +1,6 @@
+## Archived
+This bot is no longer in development as I have automated my workflow leveraging other open source tooling and some customized bash scripts - these will probably be uploaded to my "OSS" repository as I see fit. If you are looking for a bot to use during your bug bounty workflow then I would highly recommend bbot.
+
 # Development
 
 Bug Bounty Bot is currently a small side project of mine. The long term goal being to track changes to programs and be paired with common offensive tooling leveraged on bounty programs such as Nuclei. Currently the project works off of bash scripts running in the background (e.g., a simple bash script running subdomain enumeration across multiple programs and outputting them to `/home/parzival/bugbounty`. The intention is to not have any secret sauce in terms of the bot. 
